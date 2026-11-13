@@ -1,0 +1,642 @@
+/* ==========================================
+   0. BIẾN HỆ THỐNG & CONTAINER CHUẨN HÓA
+   ========================================== */
+:root {
+    --container-max: 1440px;   /* Mở rộng khung chứa  */
+    --gutter: 5vw;             /* Khoảng thở 2 bên tự co giãn theo 5% chiều rộng màn hình */
+    --navy-dark: #060e1a;      
+    --cream-bg: #f4f2ef;       
+    --text-main: #16181d;     
+    --text-muted: #6b7280;    
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    background-color: #ffffff;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Vị trí nội dung trung tâm */
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+}
+
+/* Tag tiêu đề phụ có gạch ngang */
+.eyebrow-tag {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 22px;
+}
+
+.eyebrow-tag .line {
+    width: 24px;
+    height: 1px;
+    background-color: rgba(22, 24, 29, 0.35);
+}
+
+.eyebrow-tag.light {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.eyebrow-tag .line.light {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.section-heading {
+    font-size: clamp(36px, 3.4vw, 50px);
+    font-weight: 400;
+    line-height: 1.18;
+    letter-spacing: -0.8px;
+    color: var(--text-main);
+}
+
+/* Hệ thống Nút bấm */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 26px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.btn-dark {
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    border: 1px solid var(--navy-dark);
+}
+
+.btn-dark:hover {
+    background-color: #16243b;
+}
+
+.btn-outline-dark {
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid rgba(22, 24, 29, 0.35);
+}
+
+.btn-outline-dark:hover {
+    border-color: var(--text-main);
+    background-color: rgba(22, 24, 29, 0.04);
+}
+
+.btn-white {
+    background-color: #ffffff;
+    color: var(--navy-dark);
+    border: 1px solid #ffffff;
+}
+
+.btn-white:hover {
+    background-color: #e5e7eb;
+}
+
+
+/* ==========================================
+   1. HEADER & HERO SECTION
+   ========================================== */
+.hero-wrapper {
+    position: relative;
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #ebeae6; /* Màu nền dự phòng khi chưa tải ảnh */
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.05); /* Tránh lộ viền trắng khi làm mờ */
+    filter: blur(4px);      /* Hiệu ứng làm mờ ảnh nền */
+}
+
+/* Lớp phủ trắng nền ảnh */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(235, 237, 240, 0.80) 0%,
+        rgba(238, 238, 236, 0.70) 50%,
+        rgba(244, 240, 236, 0.86) 100%
+    );
+}
+
+/* Navbar tĩnh ở đầu trang */
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px 0;
+    z-index: 100;
+    background: transparent;
+    transition: all 0.4s ease;
+}
+
+.nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 44px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+    color: #1f2937;
+    transition: opacity 0.2s;
+}
+
+.nav-links a:hover {
+    opacity: 0.6;
+}
+
+.brand-logo {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 44px;
+}
+
+.lang-switch {
+    font-size: 14.5px;
+    color: #9ca3af;
+    cursor: pointer;
+}
+
+.lang-switch span.active {
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+/* Hero Body */
+.hero-body {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding-top: 80px;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1px 0.8fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: center;
+}
+
+.hero-left {
+    max-width: 600px; /* Khóa chiều rộng */
+}
+
+.hero-title {
+    font-size: clamp(42px, 4.2vw, 62px);
+    font-weight: 400;
+    line-height: 1.14;
+    letter-spacing: -1.5px;
+    color: var(--text-main);
+    margin-bottom: 42px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.hero-actions .btn {
+    padding: 16px 28px;
+    font-size: 11.5px;
+    letter-spacing: 1.6px;
+}
+
+.hero-divider {
+    width: 1px;
+    height: 220px;
+    background-color: rgba(22, 24, 29, 0.16);
+}
+
+.hero-right {
+    max-width: 420px;
+}
+
+.hero-lead {
+    font-size: clamp(16px, 1.2vw, 18.5px);
+    font-weight: 400;
+    line-height: 1.58;
+    color: #1f2937;
+    margin-bottom: 18px;
+}
+
+.hero-sub {
+    font-size: clamp(14.5px, 1.05vw, 16.5px);
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+
+/* ==========================================
+   2. STORY, VISION & MISSION
+   ========================================== */
+.story-section {
+    background-color: #ffffff;
+    padding: 115px 0;
+}
+
+.story-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+}
+
+.story-right p {
+    font-size: clamp(15px, 1.1vw, 16.5px);
+    line-height: 1.75;
+    color: #374151;
+    margin-bottom: 22px;
+    max-width: 520px;
+}
+
+.story-right strong {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.vision-mission-section {
+    background-color: var(--cream-bg);
+    padding: 105px 0;
+}
+
+.vm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: clamp(40px, 6vw, 85px);
+    align-items: stretch;
+}
+
+.vm-divider {
+    background-color: rgba(22, 24, 29, 0.14);
+    width: 1px;
+}
+
+.vm-col {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.vm-title {
+    font-size: clamp(32px, 2.8vw, 44px);
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+}
+
+.vm-subtitle {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 16px;
+}
+
+.vm-text {
+    font-size: clamp(15px, 1.1vw, 16.5px);
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    max-width: 520px;
+}
+
+
+/* ==========================================
+   3. THE WORK BEHIND (GALLERY)
+   ========================================== */
+.gallery-section {
+    background-color: #ffffff;
+    padding: 115px 0;
+}
+
+.gallery-header {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: end;
+    margin-bottom: 52px;
+}
+
+.gallery-header-right p {
+    font-size: clamp(15px, 1.1vw, 16.5px);
+    line-height: 1.65;
+    color: var(--text-muted);
+    max-width: 520px;
+}
+
+.bento-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.gallery-row-top {
+    display: grid;
+    grid-template-columns: 1.85fr 1fr;
+    gap: 18px;
+}
+
+.gallery-row-bottom {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.img-slot {
+    width: 100%;
+    height: 340px;
+    overflow: hidden;
+    background-color: #e5e7eb;
+}
+
+.img-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.img-slot:hover img {
+    transform: scale(1.03);
+}
+
+
+/* ==========================================
+   4. CTA BANNER
+   ========================================== */
+.cta-banner {
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    padding: 100px 0;
+}
+
+.cta-heading {
+    font-size: clamp(36px, 3.4vw, 50px);
+    font-weight: 400;
+    line-height: 1.18;
+    letter-spacing: -0.8px;
+    margin-bottom: 18px;
+}
+
+.cta-subtext {
+    font-size: clamp(15px, 1.1vw, 16.5px);
+    color: rgba(255, 255, 255, 0.72);
+    margin-bottom: 36px;
+    max-width: 640px;
+}
+
+
+/* ==========================================
+   5. FOOTER
+   ========================================== */
+.site-footer {
+    background-color: var(--cream-bg);
+    padding: 75px 0 55px 0;
+    color: var(--text-main);
+}
+
+.footer-top-line {
+    border: none;
+    border-top: 1px solid rgba(22, 24, 29, 0.12);
+    margin-bottom: 60px;
+}
+
+.footer-columns {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1.5fr 1fr 2fr;
+    gap: 40px;
+    margin-bottom: 70px;
+}
+
+.f-col h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.f-col ul {
+    list-style: none;
+}
+
+.f-col li {
+    margin-bottom: 10px;
+}
+
+.f-col a,
+.f-col p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.f-col a:hover {
+    color: var(--text-main);
+}
+
+.f-col p {
+    margin-bottom: 8px;
+}
+
+.f-col strong {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.newsletter-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.newsletter-box input {
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid rgba(22, 24, 29, 0.35);
+    background: transparent;
+    padding: 8px 0;
+    font-size: 14px;
+    outline: none;
+}
+
+.newsletter-box input:focus {
+    border-bottom-color: var(--text-main);
+}
+
+.newsletter-box button {
+    padding: 7px 16px;
+    font-size: 13px;
+    background-color: #ffffff;
+    border: 1px solid rgba(22, 24, 29, 0.35);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.newsletter-box button:hover {
+    background-color: var(--navy-dark);
+    color: #ffffff;
+    border-color: var(--navy-dark);
+}
+
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.footer-brand {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 3.5px;
+}
+
+.copyright {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+
+/* ==========================================
+   6. CHẾ ĐỘ BẬT HIỆU ỨNG: STICKY / FADE HEADER
+   (Xóa dấu mở comment ở dòng dưới và dấu đóng ở cuối khối để kích hoạt)
+   ========================================== */
+
+/*
+.navbar {
+    position: fixed;
+}
+
+.navbar.scrolled {
+    background-color: rgba(244, 242, 239, 0.92);
+    backdrop-filter: blur(10px);
+    padding: 20px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+*/
+
+
+/* ==========================================
+   7. RESPONSIVE CHO TABLET & MOBILE
+   ========================================== */
+@media (max-width: 992px) {
+    :root {
+        --gutter: 32px;
+    }
+
+    .hero-grid,
+    .story-grid,
+    .gallery-header {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .hero-divider {
+        display: none;
+    }
+
+    .hero-left,
+    .hero-right {
+        max-width: 100%;
+    }
+
+    .vm-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .vm-divider {
+        width: 100%;
+        height: 1px;
+    }
+
+    .gallery-row-top,
+    .gallery-row-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    .img-slot {
+        height: 280px;
+    }
+
+    .footer-columns {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --gutter: 20px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .hero-title,
+    .section-heading,
+    .cta-heading {
+        font-size: 32px;
+    }
+
+    .footer-columns {
+        grid-template-columns: 1fr;
+    }
+}
